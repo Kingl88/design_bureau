@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add new employee</title>
+</head>
+<body>
+<h3>Add new employee</h3>
+<form action="/employees" method="post">
+    <table>
+        <tr>
+            <td><label>First Name</label></td>
+            <td>
+                <input type="text" name="firstName" th:value="${employee.firstName}"/>
+            </td>
+            <td><label>Middle Name</label></td>
+            <td>
+                <input type="text" name="middleName" th:value="${employee.middleName}"/>
+            </td>
+            <td><label>Last Name</label></td>
+            <td>
+                <input type="text" name="lastName" th:value="${employee.lastName}"/>
+            </td>
+            <td><label>Phone Name</label></td>
+            <td>
+                <input type="text" name="phoneNumber" th:value="${employee.phoneNumber}"/>
+            </td>
+            <td><label>User name</label></td>
+            <td>
+                <input type="text" name="userName" th:value="${user.userName}"/>
+            </td>
+            <td><label>User password</label></td>
+            <td>
+                <input type="text" name="password" th:value="${user.password}"/>
+            </td>
+            <td>
+            <label> User role
+                <select name="role" th:value="${user.role}">
+                    <option value="ADMIN">Admin</option>
+                    <option value="USER">User</option>
+                </select>
+            </label>
+            </td>
+        </tr>
+    </table>
+    <label>
+        <select name="department">
+            <option th:each="department : ${departments}" th:text="${department.departmentName}"
+                    th:value="${department.id}"></option>
+        </select>
+    </label>
+    <label>
+        <select name="position">
+            <option th:each="position : ${positions}" th:text="${position.positionName}"
+                    th:value="${position.id}"></option>
+        </select>
+    </label>
+    <tr>
+        <td colspan="2">
+            <input type="submit" value="Submit"/>
+        </td>
+    </tr>
+</form>
+
+</body>
+</html>
