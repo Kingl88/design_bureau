@@ -9,5 +9,4 @@ public class BootAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(BootAppApplication.class, args);
     }
-
 }

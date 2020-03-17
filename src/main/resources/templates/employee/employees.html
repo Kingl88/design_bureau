@@ -43,9 +43,9 @@
             <td><span th:text="${employee.getPhoneNumber()}"></span></td>
             <td><span th:text="${employee.getUser().userName}"></span></td>
             <td><span th:text="${employee.getUser().password}"></span></td>
-            <td><span th:text="${employee.getUser().role}"></span></td>
+            <td><span th:text="${employee.getUser().getRoles()}"></span></td>
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
-            <td><span th:text="${employee.getDepartment().getPositionInCompany().getPositionName()}"></span></td>
+            <td><span th:text="${employee.getPosition().positionName}"></span></td>
         </tr>
         </tbody>
     </table>

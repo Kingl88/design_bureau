@@ -12,15 +12,16 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(exclude = {"departments"})
-@ToString(exclude = {"departments"})
+@EqualsAndHashCode(exclude = {"departments", "employees"})
+@ToString(exclude = {"departments", "employees"})
 public class PositionInCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POSITION_ID", unique = true)
     private Long id;
     private String positionName;
-    @OneToMany(mappedBy = "positionInCompany", cascade = CascadeType.ALL,
+    @ManyToMany(mappedBy = "positions")
+    private Set<Department> departments;
+    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private Set<Department> departments = new HashSet<>();
+    private Set<Employee> employees = new HashSet<>();
 }

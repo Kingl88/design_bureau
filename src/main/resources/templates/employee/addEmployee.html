@@ -32,23 +32,23 @@
             <td>
                 <input type="text" name="password" th:value="${user.password}"/>
             </td>
-            <td>
-            <label> User role
-                <select name="role" th:value="${user.role}">
-                    <option value="ADMIN">Admin</option>
-                    <option value="USER">User</option>
-                </select>
-            </label>
-            </td>
+<!--            <td>-->
+<!--            <label> User role-->
+<!--                <select name="role" th:value="${user.roles.}">-->
+<!--                    <option value="ADMIN">Admin</option>-->
+<!--                    <option value="USER">User</option>-->
+<!--                </select>-->
+<!--            </label>-->
+<!--            </td>-->
         </tr>
     </table>
-    <label>
+    <label>Department
         <select name="department">
             <option th:each="department : ${departments}" th:text="${department.departmentName}"
                     th:value="${department.id}"></option>
         </select>
     </label>
-    <label>
+    <label> Position in company
         <select name="position">
             <option th:each="position : ${positions}" th:text="${position.positionName}"
                     th:value="${position.id}"></option>
