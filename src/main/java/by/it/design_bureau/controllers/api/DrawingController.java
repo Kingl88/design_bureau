@@ -1,7 +1,6 @@
 package by.it.design_bureau.controllers.api;
 
 import by.it.design_bureau.entities.Drawing;
-import by.it.design_bureau.entities.Product;
 import by.it.design_bureau.services.DrawingService;
 import by.it.design_bureau.services.EmployeeService;
 import by.it.design_bureau.services.ProductService;

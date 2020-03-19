@@ -4,6 +4,7 @@
     <title>Add new product</title>
 </head>
 <body>
+<div th:replace="include/header :: header"></div>
 <h3>Add new drawing</h3>
 <form action="/drawings" method="post">
     <label>Name Product</label>
@@ -44,6 +45,6 @@
         </td>
     </tr>
 </form>
-
+<div th:replace="include/footer :: footer"></div>
 </body>
 </html>

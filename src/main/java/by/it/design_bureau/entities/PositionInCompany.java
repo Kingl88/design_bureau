@@ -1,8 +1,6 @@
 package by.it.design_bureau.entities;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.HashSet;

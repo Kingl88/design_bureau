@@ -6,16 +6,11 @@
 
     <title>Spring Boot Thymeleaf Hello World Example</title>
 
-    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/static/css/main.css}"/>
 
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Example.com</a>
-</nav>
+<div th:replace="include/header :: header"></div>
 
 <main role="main" class="container">
 
@@ -45,8 +40,7 @@
     </table>
 
 </main>
-<!-- /.container -->
+<div th:replace="include/footer :: footer"></div>
 
-<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>
 </html>

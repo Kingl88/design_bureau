@@ -8,8 +8,8 @@
 
 </head>
 <body>
+<div th:replace="include/header :: header"></div>
 <div class="container">
-
     <div class="starter-template">
         <a th:href="@{employees}">Employees</a><br/>
         <a th:href="@{employees/addEmployee}">Add new Employee</a><br/>
@@ -22,12 +22,7 @@
         <a th:href="@{drawings}">Drawings</a><br/>
         <a th:href="@{drawings/addDrawing}">Add new Drawing</a><br/>
     </div>
-    <span sec:authorize="isAuthenticated()">| Logged user: <span sec:authorize="name"></span> |
-                Roles: <span sec:authorize="principal.authorities"></span> |
-                <a th:href="@{/logout}">Sign Out</a>
-            </span>
-
 </div>
-
+<div th:replace="include/footer :: footer"></div>
 </body>
 </html>

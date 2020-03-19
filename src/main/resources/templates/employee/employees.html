@@ -13,9 +13,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Example.com</a>
-</nav>
+<div th:replace="include/header :: header"></div>
 
 <main role="main" class="container">
 
@@ -41,9 +39,9 @@
             <td><span th:text="${employee.getMiddleName()}"></span></td>
             <td><span th:text="${employee.getLastName()}"></span></td>
             <td><span th:text="${employee.getPhoneNumber()}"></span></td>
-            <td><span th:text="${employee.getUser().userName}"></span></td>
-            <td><span th:text="${employee.getUser().password}"></span></td>
-            <td><span th:text="${employee.getUser().getRoles()}"></span></td>
+            <td><span th:text="${employee.getUser().username}"></span></td>
+            <td><span th:text="${employee.getUser().encodePassword}"></span></td>
+            <td><span th:text="${employee.getUser().authorities}"></span></td>
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
             <td><span th:text="${employee.getPosition().positionName}"></span></td>
         </tr>
@@ -51,7 +49,7 @@
     </table>
 
 </main>
-<!-- /.container -->
+<div th:replace="include/footer :: footer"></div>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>

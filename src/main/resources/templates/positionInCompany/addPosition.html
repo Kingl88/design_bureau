@@ -4,6 +4,7 @@
     <title>Add new position</title>
 </head>
 <body>
+<div th:replace="include/header :: header"></div>
 <h3>Add new position</h3>
 <form action="/positions" method="post">
     <table>
@@ -20,6 +21,6 @@
         </td>
     </tr>
 </form>
-
+<div th:replace="include/footer :: footer"></div>
 </body>
 </html>

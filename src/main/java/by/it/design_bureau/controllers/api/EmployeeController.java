@@ -1,16 +1,11 @@
 package by.it.design_bureau.controllers.api;
 
-import by.it.design_bureau.entities.Department;
-import by.it.design_bureau.entities.Employee;
-import by.it.design_bureau.entities.PositionInCompany;
-import by.it.design_bureau.entities.User;
+import by.it.design_bureau.entities.*;
 import by.it.design_bureau.services.DepartmentService;
 import by.it.design_bureau.services.EmployeeService;
 import by.it.design_bureau.services.PositionInCompanyService;
 import by.it.design_bureau.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +43,7 @@ public class EmployeeController {
         model.addAttribute("positions", position.getAllPosition());
         model.addAttribute("employee", new Employee());
         model.addAttribute("user", new User());
+        model.addAttribute("roles", Role.values());
         return "employee/addEmployee";
     }
 
@@ -56,22 +52,21 @@ public class EmployeeController {
                                     @ModelAttribute("user") User user,
                                     @ModelAttribute("department") Department department,
                                     @ModelAttribute("position") PositionInCompany position,
+                                    @ModelAttribute("role") Role role,
                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "employee/addEmployee";
         }
-        employee.setPosition(position);
-        if (!department.getPositions().contains(position) && !position.getDepartments().contains(department)) {
-            department.getPositions().add(position);
-            position.getDepartments().add(department);
+        if (userService.createUser(user, role)) {
+            employee.setPosition(position);
+            department.getEmployees().add(employee);
+            employee.setDepartment(department);
+            user.setEmployee(employee);
+            employeeService.createEmployee(employee);
+            employee.setUser(user);
+            return "redirect:/employees";
+        } else {
+            return "redirect:/employees/addEmployee";
         }
-        department.getEmployees().add(employee);
-        employee.setDepartment(department);
-        user.setEmployee(employee);
-        userService.createUser(user);
-        employeeService.createEmployee(employee);
-        employee.setUser(user);
-
-        return "redirect:/employees";
     }
 }

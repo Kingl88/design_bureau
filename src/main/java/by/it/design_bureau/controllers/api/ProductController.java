@@ -1,6 +1,5 @@
 package by.it.design_bureau.controllers.api;
 
-import by.it.design_bureau.entities.Department;
 import by.it.design_bureau.entities.Product;
 import by.it.design_bureau.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

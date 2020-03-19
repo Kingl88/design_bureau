@@ -4,6 +4,7 @@
     <title>Add new employee</title>
 </head>
 <body>
+<div th:replace="include/header :: header"></div>
 <h3>Add new employee</h3>
 <form action="/employees" method="post">
     <table>
@@ -26,20 +27,20 @@
             </td>
             <td><label>User name</label></td>
             <td>
-                <input type="text" name="userName" th:value="${user.userName}"/>
+                <input type="text" name="username" th:value="${user.username}"/>
             </td>
             <td><label>User password</label></td>
             <td>
-                <input type="text" name="password" th:value="${user.password}"/>
+                <input type="text" name="password" th:value="${user.encodePassword}"/>
             </td>
-<!--            <td>-->
-<!--            <label> User role-->
-<!--                <select name="role" th:value="${user.roles.}">-->
-<!--                    <option value="ADMIN">Admin</option>-->
-<!--                    <option value="USER">User</option>-->
-<!--                </select>-->
-<!--            </label>-->
-<!--            </td>-->
+            <td>
+            <label> User role
+                <select name="role">
+                    <option th:each="role : ${roles}" th:text="${role}"
+                            th:value="${role}"></option>
+                </select>
+            </label>
+            </td>
         </tr>
     </table>
     <label>Department
@@ -60,6 +61,6 @@
         </td>
     </tr>
 </form>
-
+<div th:replace="include/footer :: footer"></div>
 </body>
 </html>
