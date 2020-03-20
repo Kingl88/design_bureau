@@ -11,7 +11,7 @@ public class MainController {
         return "home";
     }
     @GetMapping(value = "/login")
-    public String loginPage(Model model) {
+    public String logInPage(Model model) {
         return "/login";
     }
 
