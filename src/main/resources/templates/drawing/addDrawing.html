@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/head :: head">
+    <title>Add new product</title>
+</head>
+<body>
+<div th:replace="include/header :: header"></div>
+<h3>Add new drawing</h3>
+<form action="/drawings" method="post">
+    <label>Name Product</label>
+    <br>
+    <select name="product">
+    <option th:each="product : ${products}" th:text="${product.productName}"
+            th:value="${product.id}"></option>
+</select>
+    </br>
+    <label>Name Drawing</label>
+    <br>
+    <input type="text" name="drawingName" th:value="${drawing.drawingName}"/>
+    </br>
+    <label>Checked</label>
+    <br>
+    <select name="checked">
+        <option th:each="employee : ${employees}" th:text="${employee.firstName}  + ' ' +  ${employee.lastName}"
+                th:value="${employee.id}"></option>
+    </select>
+    </br>
+    <label>Developed</label>
+    <br>
+    <select name="developed">
+        <option th:each="employee : ${employees}" th:text="${employee.firstName}  + ' ' +   ${employee.lastName}"
+                th:value="${employee.id}"></option>
+    </select>
+    </br>
+    <label>Approved</label>
+    <br>
+    <select name="approved">
+        <option th:each="employee : ${employees}" th:text="${employee.firstName}   + ' ' +  ${employee.lastName}"
+                th:value="${employee.id}"></option>
+    </select>
+    </br>
+    <tr>
+        <td colspan="2">
+            <input type="submit" value="Submit"/>
+        </td>
+    </tr>
+</form>
+<div th:replace="include/footer :: footer"></div>
+</body>
+</html>

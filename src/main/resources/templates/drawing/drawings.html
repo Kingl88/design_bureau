@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/head :: head">
+    <title>Drawing</title>
+</head>
+
+<body>
+<div th:replace="include/header :: header"></div>
+
+<main role="main" class="container">
+
+    <table class="table text-center border">
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>Product Name</td>
+            <td>Drawing Name</td>
+            <td>Check Name</td>
+            <td>Develop Name</td>
+            <td>Approve Name</td>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="drawing : ${drawings}">
+            <td><span th:text="${drawing.id}"></span></td>
+            <td><span th:text="${drawing.getProduct().productName}"></span></td>
+            <td><span th:text="${drawing.drawingName}"></span></td>
+            <td><span th:text="${drawing.getChecked().lastName}"></span></td>
+            <td><span th:text="${drawing.getDeveloped().lastName}"></span></td>
+            <td><span th:text="${drawing.getApproved().lastName}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+<div th:replace="include/footer :: footer"></div>
+
+</body>
+</html>

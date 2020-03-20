@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/head :: head">
+    <title>Departments</title>
+</head>
+
+<body>
+
+<div th:replace="include/header :: header"></div>
+
+<main role="main" class="container">
+
+    <table class="table text-center border">
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>Department Name</td>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td><span th:text="${department.id}"></span></td>
+            <td><span th:text="${department.departmentName}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+<div th:replace="include/footer :: footer"></div>
+
+</body>
+</html>

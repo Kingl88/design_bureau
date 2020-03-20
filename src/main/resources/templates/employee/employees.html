@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/head :: head">
+    <title>Employees</title>
+</head>
+
+<body>
+
+<div th:replace="include/header :: header"></div>
+
+<main role="main" class="container">
+
+    <table class="table text-center border">
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>First Name</td>
+            <td>Middle Name</td>
+            <td>Last Name</td>
+            <td>Phone</td>
+            <td>User Name</td>
+            <td>User Password</td>
+            <td>User Role</td>
+            <td>Department</td>
+            <td>Position</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td><span th:text="${employee.id}"></span></td>
+            <td><span th:text="${employee.getFirstName()}"></span></td>
+            <td><span th:text="${employee.getMiddleName()}"></span></td>
+            <td><span th:text="${employee.getLastName()}"></span></td>
+            <td><span th:text="${employee.getPhoneNumber()}"></span></td>
+            <td><span th:text="${employee.getUser().username}"></span></td>
+            <td><span th:text="${employee.getUser().encodePassword}"></span></td>
+            <td><span th:text="${employee.getUser().authorities}"></span></td>
+            <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
+            <td><span th:text="${employee.getPosition().positionName}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+<div th:replace="include/footer :: footer"></div>
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
