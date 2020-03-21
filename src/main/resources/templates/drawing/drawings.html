@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
     <title>Drawing</title>
 </head>
@@ -18,8 +19,6 @@
             <td>Check Name</td>
             <td>Develop Name</td>
             <td>Approve Name</td>
-
-
         </tr>
         </thead>
         <tbody>
@@ -30,10 +29,17 @@
             <td><span th:text="${drawing.getChecked().lastName}"></span></td>
             <td><span th:text="${drawing.getDeveloped().lastName}"></span></td>
             <td><span th:text="${drawing.getApproved().lastName}"></span></td>
+            <td>
+                <form sec:authorize="isAuthenticated()" th:action="@{'/drawings/delete/' + ${drawing.id}}" th:method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
-
+    <form sec:authorize="isAuthenticated()" th:action="@{/drawings/addDrawing}" th:method="get">
+        <button type="submit">Add Drawing</button>
+    </form>
 </main>
 <div th:replace="include/footer :: footer"></div>
 

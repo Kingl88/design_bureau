@@ -1,5 +1,5 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
     <title>Employees</title>
 </head>
@@ -37,10 +37,17 @@
             <td><span th:text="${employee.getUser().authorities}"></span></td>
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
             <td><span th:text="${employee.getPosition().positionName}"></span></td>
+            <td>
+            <form sec:authorize="isAuthenticated()" th:action="@{'/employees/delete/' + ${employee.id}}" th:method="post">
+                <button type="submit">Delete</button>
+            </form>
+            </td>
         </tr>
         </tbody>
     </table>
-
+    <form sec:authorize="isAuthenticated()" th:action="@{/employees/addEmployee}" th:method="get">
+        <button type="submit">Add Employee</button>
+    </form>
 </main>
 <div th:replace="include/footer :: footer"></div>
 

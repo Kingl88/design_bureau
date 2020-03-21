@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
     <meta charset="utf-8">
     <title>Products</title>
@@ -16,17 +17,23 @@
         <tr>
             <td>#</td>
             <td>Product Name</td>
-
         </tr>
         </thead>
         <tbody>
         <a th:href="@{drawings}"> <tr th:each="product : ${products}">
             <td><span th:text="${product.id}"></span></td>
             <td><span th:text="${product.productName}"></span></td>
+            <td>
+                <form sec:authorize="isAuthenticated()" th:action="@{'/products/delete/' + ${product.id}}" th:method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr></a>
         </tbody>
     </table>
-
+    <form sec:authorize="isAuthenticated()" th:action="@{/products/addProduct}" th:method="get">
+        <button type="submit">Add Product</button>
+    </form>
 </main>
 <div th:replace="include/footer :: footer"></div>
 </body>
