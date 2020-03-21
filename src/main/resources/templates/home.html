@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-
-
 <head th:replace="include/head :: head">
     <title>Design_bureau</title>
 </head>
@@ -11,7 +9,6 @@
 <div class="container">
     <div class="starter-template">
         <a th:href="@{employees}">Employees</a><br/>
-        <a th:href="@{employees/addEmployee}">Add new Employee</a><br/>
         <a th:href="@{departments}">Departments</a><br/>
         <a th:href="@{departments/addDepartment}">Add new Department</a><br/>
         <a th:href="@{positions}">Positions in company</a><br/>
@@ -19,7 +16,6 @@
         <a th:href="@{products}">Products</a><br/>
         <a th:href="@{products/addProduct}">Add new Product</a><br/>
         <a th:href="@{drawings}">Drawings</a><br/>
-        <a th:href="@{drawings/addDrawing}">Add new Drawing</a><br/>
     </div>
 </div>
 <div th:replace="include/footer :: footer"></div>

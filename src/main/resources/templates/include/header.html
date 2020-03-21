@@ -23,7 +23,6 @@
             <a th:href="@{/drawings}"> | Drawings</a>
             <a sec:authorize="hasAnyRole('ADMIN', 'USER')" th:href="@{/drawings/addDrawing}"> | Add Drawings</a>
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/employees}"> | Employees</a>
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/employees/addEmployee}"> | Add Employee</a>
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/departments}"> | Departments</a>
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/departments/addDepartment}"> | Add Department</a>
             <a sec:authorize="hasRole('ADMIN')" th:href="@{/positions}"> | Position In Company</a>

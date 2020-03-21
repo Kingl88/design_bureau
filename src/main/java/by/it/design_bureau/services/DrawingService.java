@@ -7,4 +7,5 @@ import java.util.List;
 public interface DrawingService {
     List<Drawing> gelAllDrawing();
     Drawing createDrawing(Drawing drawing);
+    void deleteDrawing(Long id);
 }

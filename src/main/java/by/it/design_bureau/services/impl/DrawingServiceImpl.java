@@ -24,4 +24,9 @@ public class DrawingServiceImpl implements DrawingService {
     public Drawing createDrawing(Drawing drawing) {
         return drawingRepository.save(drawing);
     }
+
+    @Override
+    public void deleteDrawing(Long id) {
+        drawingRepository.deleteById(id);
+    }
 }
