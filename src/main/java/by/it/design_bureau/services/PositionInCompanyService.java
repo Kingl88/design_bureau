@@ -7,4 +7,5 @@ import java.util.List;
 public interface PositionInCompanyService {
     PositionInCompany createPosition(PositionInCompany position);
     List<PositionInCompany> getAllPosition();
+    void deletePosition(Long id);
 }

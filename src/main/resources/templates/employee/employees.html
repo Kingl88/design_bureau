@@ -1,5 +1,6 @@
-<!DOCTYPE HTML>xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
     <title>Employees</title>
 </head>
@@ -7,7 +8,6 @@
 <body>
 
 <div th:replace="include/header :: header"></div>
-
 <main role="main" class="container">
 
     <table class="table text-center border">
@@ -19,7 +19,6 @@
             <td>Last Name</td>
             <td>Phone</td>
             <td>User Name</td>
-            <td>User Password</td>
             <td>User Role</td>
             <td>Department</td>
             <td>Position</td>
@@ -28,12 +27,11 @@
         <tbody>
         <tr th:each="employee : ${employees}">
             <td><span th:text="${employee.id}"></span></td>
-            <td><span th:text="${employee.getFirstName()}"></span></td>
+            <td><a th:href="@{/employees/edit/(id=${employee.id})}"><span th:text="${employee.getFirstName()}"></span></a></td>
             <td><span th:text="${employee.getMiddleName()}"></span></td>
             <td><span th:text="${employee.getLastName()}"></span></td>
             <td><span th:text="${employee.getPhoneNumber()}"></span></td>
             <td><span th:text="${employee.getUser().username}"></span></td>
-            <td><span th:text="${employee.getUser().encodePassword}"></span></td>
             <td><span th:text="${employee.getUser().authorities}"></span></td>
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
             <td><span th:text="${employee.getPosition().positionName}"></span></td>
@@ -50,7 +48,6 @@
     </form>
 </main>
 <div th:replace="include/footer :: footer"></div>
-
 <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>
 </html>

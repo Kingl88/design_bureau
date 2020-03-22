@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +35,12 @@ public class PositionInCompanyController {
             return "positionInCompany/addPosition";
         }
         this.position.createPosition(position);
+        return "redirect:/positions";
+    }
+
+    @RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
+    public String deletePosition(@PathVariable Long id) {
+        position.deletePosition(id);
         return "redirect:/positions";
     }
 }

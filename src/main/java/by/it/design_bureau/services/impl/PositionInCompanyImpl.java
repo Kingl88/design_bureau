@@ -24,4 +24,9 @@ public class PositionInCompanyImpl implements PositionInCompanyService {
     public List<PositionInCompany> getAllPosition() {
         return positionInCompanyRepository.findAll();
     }
+
+    @Override
+    public void deletePosition(Long id) {
+        positionInCompanyRepository.deleteById(id);
+    }
 }

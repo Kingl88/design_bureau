@@ -3,6 +3,7 @@ package by.it.design_bureau.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ public class PositionInCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String positionName;
     @ManyToMany(mappedBy = "positions")
     private Set<Department> departments;

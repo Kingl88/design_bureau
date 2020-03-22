@@ -9,4 +9,5 @@ public interface DepartmentService {
     Optional<Department> find(Long id);
     List<Department> getAllDepartments();
     Department createDepartment(Department department);
+    void deleteDepartment(Long id);
 }

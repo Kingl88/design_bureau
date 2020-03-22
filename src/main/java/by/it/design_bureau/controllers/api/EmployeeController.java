@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -70,6 +71,29 @@ public class EmployeeController {
     @RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
     public String deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
-        return "redirect:/employees";
+        return "employee/employees";
+    }
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Employee employee = employeeService.getEmployeeById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        model.addAttribute("employee", employee);
+        return "updateEmployee";
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String updateEmployee(@PathVariable("id") long id, @Valid Employee employee,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            employee.setId(id);
+            return "updateEmployee";
+        }
+        model.addAttribute("employee", employee);
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("departments", departmentService.getAllDepartments());
+        model.addAttribute("positions", position.getAllPosition());
+        employeeService.createEmployee(employee);
+        return "employee/employees";
     }
 }

@@ -3,6 +3,7 @@ package by.it.design_bureau.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String departmentName;
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)

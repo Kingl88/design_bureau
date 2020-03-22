@@ -6,7 +6,7 @@
 <body>
 <div th:replace="include/header :: header"></div>
 <h3>Add new employee</h3>
-<form action="/employees" method="post">
+<form action="#" th:action="@{/update/{id}(id=${employee.id})}" th:object="${employee}" method="post">
     <label>First Name</label>
     <br>
     <input type="text" name="firstName" th:value="${employee.firstName}"/>
@@ -25,12 +25,12 @@
     </br>
     <label>User Name</label>
     <br>
-    <input type="text" name="username" th:value="${user.username}"
+    <input type="text" name="user" th:value="${employee.user.username}"
            placeholder="User name" minlength="3" required/>
     </br>
     <label>User password</label>
     <br>
-    <input type="text" name="password" th:value="${user.encodePassword}"
+    <input type="text" name="password" th:value="${employee.user.username}"
            placeholder="Password" minlength="5" required/>
     </br>
     <br>

@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +35,12 @@ public class DepartmentController {
             return "department/addDepartment";
         }
         departmentService.createDepartment(department);
+        return "redirect:/departments";
+    }
+
+    @RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
+    public String deleteDepartment(@PathVariable Long id) {
+        departmentService.deleteDepartment(id);
         return "redirect:/departments";
     }
 }

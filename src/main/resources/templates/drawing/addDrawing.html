@@ -22,7 +22,7 @@
     <br>
     <select name="checked">
         <option th:each="employee : ${employees}" th:text="${employee.firstName}  + ' ' +  ${employee.lastName}"
-                th:value="${employee.id}"></option>
+                th:value="${employee.id}" th:required="required"></option>
     </select>
     </br>
     <label>Developed</label>

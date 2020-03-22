@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
     <meta charset="utf-8">
     <title>Position In Company</title>
@@ -24,10 +25,17 @@
         <tr th:each="position : ${positions}">
             <td><span th:text="${position.id}"></span></td>
             <td><span th:text="${position.positionName}"></span></td>
+            <td>
+                <form sec:authorize="isAuthenticated()" th:action="@{'/positions/delete/' + ${position.id}}" th:method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
-
+    <form sec:authorize="isAuthenticated()" th:action="@{/positions/addPosition}" th:method="get">
+        <button type="submit">Add Position</button>
+    </form>
 </main>
 <div th:replace="include/footer :: footer"></div>
 </body>
