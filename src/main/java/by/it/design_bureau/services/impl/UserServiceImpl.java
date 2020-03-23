@@ -22,6 +22,12 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
+    public boolean deleteUser(Long id) {
+        userRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
     public boolean createUser(User user, Role role) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 

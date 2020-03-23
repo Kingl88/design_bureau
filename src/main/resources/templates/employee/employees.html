@@ -27,7 +27,7 @@
         <tbody>
         <tr th:each="employee : ${employees}">
             <td><span th:text="${employee.id}"></span></td>
-            <td><a th:href="@{/employees/edit/(id=${employee.id})}"><span th:text="${employee.getFirstName()}"></span></a></td>
+            <td><a th:href="@{/employees/edit/{id}(id=${employee.id})}"><span th:text="${employee.getFirstName()}"></span></a></td>
             <td><span th:text="${employee.getMiddleName()}"></span></td>
             <td><span th:text="${employee.getLastName()}"></span></td>
             <td><span th:text="${employee.getPhoneNumber()}"></span></td>
@@ -36,9 +36,7 @@
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
             <td><span th:text="${employee.getPosition().positionName}"></span></td>
             <td>
-            <form sec:authorize="isAuthenticated()" th:action="@{'/employees/delete/' + ${employee.id}}" th:method="post">
-                <button type="submit">Delete</button>
-            </form>
+                <a th:href="@{/employees/delete/{id}(id=${employee.id})}"><button sec:authorize="isAuthenticated()" type="submit">Delete</button></a>
             </td>
         </tr>
         </tbody>

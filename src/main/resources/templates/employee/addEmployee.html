@@ -6,7 +6,7 @@
 <body>
 <div th:replace="include/header :: header"></div>
 <h3>Add new employee</h3>
-<form action="/employees" method="post">
+<form action="#" th:action="@{/employees/add}" method="post">
     <label>First Name</label>
     <br>
     <input type="text" name="firstName" th:value="${employee.firstName}"/>

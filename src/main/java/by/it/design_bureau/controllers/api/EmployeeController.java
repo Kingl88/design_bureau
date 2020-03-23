@@ -35,7 +35,7 @@ public class EmployeeController {
         return "employee/employees";
     }
 
-    @RequestMapping(value = "/addEmployee", method = RequestMethod.GET)
+    @GetMapping(value = "/addEmployee")
     public String addEmployeePage(Model model) {
         model.addAttribute("departments", departmentService.getAllDepartments());
         model.addAttribute("positions", position.getAllPosition());
@@ -45,55 +45,50 @@ public class EmployeeController {
         return "employee/addEmployee";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String addEmployeeSubmit(@Validated @ModelAttribute("employee") Employee employee,
-                                    @ModelAttribute("user") User user,
-                                    @ModelAttribute("department") Department department,
-                                    @ModelAttribute("position") PositionInCompany position,
+    @PostMapping(value = "/add")
+    public String addEmployeeSubmit(@Valid Employee employee,
+                                    @Valid User user,
                                     @ModelAttribute("role") Role role,
-                                    BindingResult bindingResult) {
+                                    BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "employee/addEmployee";
         }
-        if (userService.createUser(user, role)) {
-            employee.setPosition(position);
-            department.getEmployees().add(employee);
-            employee.setDepartment(department);
-            user.setEmployee(employee);
-            employeeService.createEmployee(employee);
-            employee.setUser(user);
-            return "redirect:/employees";
-        } else {
-            return "redirect:/employees/addEmployee";
-        }
+        userService.createUser(user, role);
+        employee.setUser(user);
+        employeeService.createEmployee(employee);
+        return "redirect:/employees";
     }
 
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
-    public String deleteEmployee(@PathVariable Long id) {
+    @GetMapping(value = "/delete/{id}")
+    public String deleteEmployee(@PathVariable Long id, Model model) {
         employeeService.deleteEmployee(id);
-        return "employee/employees";
+        return "redirect:/employees";
     }
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+
+    @GetMapping(value = "/edit/{id}")
+    public String showUpdateForm(@PathVariable Long id, Model model) {
         Employee employee = employeeService.getEmployeeById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-
         model.addAttribute("employee", employee);
-        return "updateEmployee";
-    }
-
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String updateEmployee(@PathVariable("id") long id, @Valid Employee employee,
-                             BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            employee.setId(id);
-            return "updateEmployee";
-        }
-        model.addAttribute("employee", employee);
+        model.addAttribute("user", employee.getUser());
         model.addAttribute("roles", Role.values());
         model.addAttribute("departments", departmentService.getAllDepartments());
         model.addAttribute("positions", position.getAllPosition());
+        return "employee/updateEmployee";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String updateEmployee(@PathVariable("id") long id, @Valid Employee employee, @Valid User user,
+                                 @ModelAttribute("role") Role role,
+                                 BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            employee.setId(id);
+            return "employee/updateEmployee";
+        }
+        userService.deleteUser(id);
+        userService.createUser(user, role);
+        employee.setUser(user);
         employeeService.createEmployee(employee);
-        return "employee/employees";
+        return "redirect:/employees";
     }
 }
