@@ -20,8 +20,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="department : ${departments}">
-            <td><span th:text="${department.id}"></span></td>
+        <tr th:each="department, index : ${departments}">
+            <td><span th:text="${index.count}"></span></td>
             <td><span th:text="${department.departmentName}"></span></td>
             <td>
                 <form sec:authorize="isAuthenticated()" th:action="@{'/departments/delete/' + ${department.id}}" th:method="post">

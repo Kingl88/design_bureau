@@ -1,6 +1,9 @@
 package by.it.design_bureau.controllers.api;
 
 import by.it.design_bureau.entities.Drawing;
+import by.it.design_bureau.entities.Employee;
+import by.it.design_bureau.entities.Role;
+import by.it.design_bureau.entities.User;
 import by.it.design_bureau.services.DrawingService;
 import by.it.design_bureau.services.EmployeeService;
 import by.it.design_bureau.services.ProductService;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -37,7 +41,7 @@ public class DrawingController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addDrawingSubmit(@Validated @ModelAttribute("drawing") Drawing drawing, BindingResult bindingResult) {
+    public String addDrawingSubmit(@Valid Drawing drawing, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "drawing/addDrawing";
         }
@@ -45,9 +49,30 @@ public class DrawingController {
         return "redirect:/drawings";
     }
 
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
+    @GetMapping(value = "/delete/{id}")
     public String deleteDrawing(@PathVariable Long id) {
         drawingService.deleteDrawing(id);
+        return "redirect:/drawings";
+    }
+
+    @GetMapping(value = "/edit/{id}")
+    public String showUpdateForm(@PathVariable Long id, Model model) {
+        Drawing drawing = drawingService.getDrawingById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        model.addAttribute("employees", employeeService.getAllEmployees());
+        model.addAttribute("products", productService.getAllProduct());
+        model.addAttribute("drawing", drawing);
+        return "drawing/updateDrawing";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String updateDrawing(@PathVariable("id") long id, @Valid Drawing drawing,
+                                 BindingResult result) {
+        if (result.hasErrors()) {
+            drawing.setId(id);
+            return "drawing/updateDrawing";
+        }
+        drawingService.updateDrawing(drawing);
         return "redirect:/drawings";
     }
 }

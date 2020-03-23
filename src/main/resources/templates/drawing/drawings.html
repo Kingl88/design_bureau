@@ -22,17 +22,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="drawing : ${drawings}">
-            <td><span th:text="${drawing.id}"></span></td>
+        <tr th:each="drawing, index : ${drawings}">
+            <td><span th:text="${index.count}"></span></td>
             <td><span th:text="${drawing.getProduct().productName}"></span></td>
             <td><span th:text="${drawing.drawingName}"></span></td>
             <td><span th:text="${drawing.getChecked().lastName}"></span></td>
             <td><span th:text="${drawing.getDeveloped().lastName}"></span></td>
             <td><span th:text="${drawing.getApproved().lastName}"></span></td>
             <td>
-                <form sec:authorize="isAuthenticated()" th:action="@{'/drawings/delete/' + ${drawing.id}}" th:method="post">
-                    <button type="submit">Delete</button>
-                </form>
+                <a th:href="@{/drawings/edit/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit">Update</button></a>
+            </td>
+            <td>
+                <a th:href="@{/drawings/delete/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit">Delete</button></a>
             </td>
         </tr>
         </tbody>

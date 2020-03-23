@@ -1,6 +1,8 @@
 package by.it.design_bureau.services.impl;
 
 import by.it.design_bureau.entities.Drawing;
+import by.it.design_bureau.entities.Employee;
+import by.it.design_bureau.entities.Product;
 import by.it.design_bureau.repositories.DrawingRepository;
 import by.it.design_bureau.services.DrawingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,5 +31,21 @@ public class DrawingServiceImpl implements DrawingService {
     @Override
     public void deleteDrawing(Long id) {
         drawingRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Drawing> getDrawingById(Long id) {
+        return drawingRepository.findById(id);
+    }
+
+    @Override
+    public Drawing updateDrawing(Drawing drawing) {
+        return drawingRepository.save(drawing);
+    }
+
+    @Override
+    public List<Drawing> findAllByProduct(Product product) {
+        return drawingRepository.findAllByProduct(product);
     }
 }

@@ -5,8 +5,8 @@
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
-<h3>Add new employee</h3>
-<form action="#" th:action="@{/employees/add}" method="post">
+<form class="container" action="#" th:action="@{/employees/add}" method="post">
+    <h3>Add new employee</h3>
     <label>First Name</label>
     <br>
     <input type="text" name="firstName" th:value="${employee.firstName}"/>

@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="include/head :: head">
-    <title>Add new product</title>
+    <title>Update drawing</title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
-<form class="container" action="/drawings" method="post">
-    <h3>Add new drawing</h3>
+<form class="container" action="#" th:action="@{/drawings/update/{id}(id=${drawing.id})}" th:object="${drawing}" method="post">
+    <h3>Update drawing</h3>
     <label>Name Product</label>
     <br>
     <select name="product">
-    <option th:each="product : ${products}" th:text="${product.productName}"
-            th:value="${product.id}"></option>
-</select>
+        <option th:each="product : ${products}" th:text="${product.productName}"
+                th:value="${product.id}"></option>
+    </select>
     </br>
     <label>Name Drawing</label>
     <br>

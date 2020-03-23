@@ -1,6 +1,7 @@
 package by.it.design_bureau.controllers.api;
 
 import by.it.design_bureau.entities.Product;
+import by.it.design_bureau.services.DrawingService;
 import by.it.design_bureau.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    DrawingService drawingService;
     @GetMapping
     public String productList(Model model) {
         List<Product> allProduct = productService.getAllProduct();
@@ -38,9 +41,17 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
+    @GetMapping(value="/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/products";
+    }
+
+    @GetMapping(value="/{id}")
+    public String getAllDrawing(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
+        model.addAttribute("drawings", drawingService.findAllByProduct(product));
+        return "drawing/drawings";
     }
 }

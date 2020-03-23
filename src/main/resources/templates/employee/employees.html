@@ -25,9 +25,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="employee : ${employees}">
-            <td><span th:text="${employee.id}"></span></td>
-            <td><a th:href="@{/employees/edit/{id}(id=${employee.id})}"><span th:text="${employee.getFirstName()}"></span></a></td>
+        <tr th:each="employee, index : ${employees}">
+            <td><span th:text="${index.count}"></span></td>
+            <td><span th:text="${employee.getFirstName()}"></span></td>
             <td><span th:text="${employee.getMiddleName()}"></span></td>
             <td><span th:text="${employee.getLastName()}"></span></td>
             <td><span th:text="${employee.getPhoneNumber()}"></span></td>
@@ -36,7 +36,10 @@
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
             <td><span th:text="${employee.getPosition().positionName}"></span></td>
             <td>
-                <a th:href="@{/employees/delete/{id}(id=${employee.id})}"><button sec:authorize="isAuthenticated()" type="submit">Delete</button></a>
+                <a th:href="@{/employees/edit/{id}(id=${employee.id})}"><button sec:authorize="isAuthenticated()" type="submit">Update</button></a>
+            </td>
+            <td>
+                <a th:href="@{/employees/delete/{id}(id=${employee.id})}"><button sec:authorize="hasRole('ADMIN')" type="submit">Delete</button></a>
             </td>
         </tr>
         </tbody>

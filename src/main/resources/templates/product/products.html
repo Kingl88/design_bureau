@@ -20,13 +20,11 @@
         </tr>
         </thead>
         <tbody>
-        <a th:href="@{drawings}"> <tr th:each="product : ${products}">
-            <td><span th:text="${product.id}"></span></td>
-            <td><span th:text="${product.productName}"></span></td>
+        <a th:href="@{drawings}"> <tr th:each="product, index : ${products}">
+            <td><span th:text="${index.count}"></span></td>
+            <td><a th:href="@{/products/{id}(id=${product.id})}"><span th:text="${product.productName}"></span></a></td>
             <td>
-                <form sec:authorize="isAuthenticated()" th:action="@{'/products/delete/' + ${product.id}}" th:method="post">
-                    <button type="submit">Delete</button>
-                </form>
+                <a th:href="@{/products/delete/{id}(id=${product.id})}"><button sec:authorize="isAuthenticated()" type="submit">Delete</button></a>
             </td>
         </tr></a>
         </tbody>

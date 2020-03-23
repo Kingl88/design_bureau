@@ -19,7 +19,6 @@ public class Drawing {
     private String drawingName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    @NotEmpty
     private Employee developed;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

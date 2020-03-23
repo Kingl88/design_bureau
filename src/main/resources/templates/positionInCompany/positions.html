@@ -22,8 +22,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="position : ${positions}">
-            <td><span th:text="${position.id}"></span></td>
+        <tr th:each="position, index : ${positions}">
+            <td><span th:text="${index.count}"></span></td>
             <td><span th:text="${position.positionName}"></span></td>
             <td>
                 <form sec:authorize="isAuthenticated()" th:action="@{'/positions/delete/' + ${position.id}}" th:method="post">
