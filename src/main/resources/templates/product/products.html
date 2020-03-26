@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
     <meta charset="utf-8">
-    <title>Products</title>
+    <title th:text="#{product.message.products}"></title>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         <thead>
         <tr>
             <td>#</td>
-            <td>Product Name</td>
+            <td th:text="#{product.message.name}"></td>
         </tr>
         </thead>
         <tbody>
@@ -24,13 +24,13 @@
             <td><span th:text="${index.count}"></span></td>
             <td><a th:href="@{/products/{id}(id=${product.id})}"><span th:text="${product.productName}"></span></a></td>
             <td>
-                <a th:href="@{/products/delete/{id}(id=${product.id})}"><button sec:authorize="isAuthenticated()" type="submit">Delete</button></a>
+                <a th:href="@{/products/delete/{id}(id=${product.id})}"><button sec:authorize="isAuthenticated()" type="submit" th:text="#{button.delete}"></button></a>
             </td>
         </tr></a>
         </tbody>
     </table>
     <form sec:authorize="isAuthenticated()" th:action="@{/products/addProduct}" th:method="get">
-        <button type="submit">Add Product</button>
+        <button type="submit" th:text="#{button.add.product}"></button>
     </form>
 </main>
 <div th:replace="include/footer :: footer"></div>

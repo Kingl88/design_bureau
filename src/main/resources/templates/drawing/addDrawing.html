@@ -1,38 +1,38 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="include/head :: head">
-    <title>Add new product</title>
+    <title th:text="#{drawing.message.add}"></title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
 <form class="container" action="/drawings" method="post">
-    <h3>Add new drawing</h3>
-    <label>Name Product</label>
+    <h3 th:text="#{drawing.message.add}"></h3>
+    <label th:text="#{drawing.message.productName}"></label>
     <br>
     <select name="product">
     <option th:each="product : ${products}" th:text="${product.productName}"
             th:value="${product.id}"></option>
 </select>
     </br>
-    <label>Name Drawing</label>
+    <label th:text="#{drawing.message.drawingName}"></label>
     <br>
     <input type="text" name="drawingName" th:value="${drawing.drawingName}"/>
     </br>
-    <label>Checked</label>
+    <label th:text="#{drawing.message.checked}"></label>
     <br>
     <select name="checked">
         <option th:each="employee : ${employees}" th:text="${employee.firstName}  + ' ' +  ${employee.lastName}"
                 th:value="${employee.id}" th:required="required"></option>
     </select>
     </br>
-    <label>Developed</label>
+    <label th:text="#{drawing.message.developed}"></label>
     <br>
     <select name="developed">
         <option th:each="employee : ${employees}" th:text="${employee.firstName}  + ' ' +   ${employee.lastName}"
                 th:value="${employee.id}"></option>
     </select>
     </br>
-    <label>Approved</label>
+    <label th:text="#{drawing.message.approved}"></label>
     <br>
     <select name="approved">
         <option th:each="employee : ${employees}" th:text="${employee.firstName}   + ' ' +  ${employee.lastName}"
@@ -40,8 +40,8 @@
     </select>
     </br>
     <tr>
-        <td colspan="2">
-            <input type="submit" value="Submit"/>
+        <td>
+                <button type="submit" th:text="#{button.add.drawing}"></button>
         </td>
     </tr>
 </form>

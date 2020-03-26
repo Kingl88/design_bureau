@@ -48,4 +48,9 @@ public class DrawingServiceImpl implements DrawingService {
     public List<Drawing> findAllByProduct(Product product) {
         return drawingRepository.findAllByProduct(product);
     }
+
+    @Override
+    public void deleteDrawingByProduct(Product product) {
+        drawingRepository.deleteAllByProduct(product);
+    }
 }

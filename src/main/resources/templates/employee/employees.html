@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
-    <title>Employees</title>
+    <title th:text="#{employee.message.employees}"></title>
 </head>
 
 <body>
@@ -14,14 +14,14 @@
         <thead>
         <tr>
             <td>#</td>
-            <td>First Name</td>
-            <td>Middle Name</td>
-            <td>Last Name</td>
-            <td>Phone</td>
-            <td>User Name</td>
-            <td>User Role</td>
-            <td>Department</td>
-            <td>Position</td>
+            <td th:text="#{employee.message.firstName}"></td>
+            <td th:text="#{employee.message.middleName}"></td>
+            <td th:text="#{employee.message.lastName}"></td>
+            <td th:text="#{employee.message.phone}"></td>
+            <td th:text="#{employee.message.userName}"></td>
+            <td th:text="#{employee.message.role}"></td>
+            <td th:text="#{employee.message.department}"></td>
+            <td th:text="#{employee.message.positions}"></td>
         </tr>
         </thead>
         <tbody>
@@ -32,20 +32,27 @@
             <td><span th:text="${employee.getLastName()}"></span></td>
             <td><span th:text="${employee.getPhoneNumber()}"></span></td>
             <td><span th:text="${employee.getUser().username}"></span></td>
-            <td><span th:text="${employee.getUser().authorities}"></span></td>
+            <td><span
+                    th:text="${employee.getUser().authorities.stream().findFirst().toString().substring(14, employee.getUser().authorities.stream().findFirst().toString().length()-1)}"></span>
+            </td>
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
             <td><span th:text="${employee.getPosition().positionName}"></span></td>
             <td>
-                <a th:href="@{/employees/edit/{id}(id=${employee.id})}"><button sec:authorize="isAuthenticated()" type="submit">Update</button></a>
+                <a th:href="@{/employees/edit/{id}(id=${employee.id})}">
+                    <button th:if="${#httpServletRequest.remoteUser.equals(employee.getUser().getUsername()) && #httpServletRequest.isUserInRole('USER') || #httpServletRequest.isUserInRole('ADMIN')}"
+                            sec:authorize="isAuthenticated()" type="submit" th:text="#{button.update}"></button>
+                </a>
             </td>
             <td>
-                <a th:href="@{/employees/delete/{id}(id=${employee.id})}"><button sec:authorize="hasRole('ADMIN')" type="submit">Delete</button></a>
+                <a th:href="@{/employees/delete/{id}(id=${employee.id})}">
+                    <button sec:authorize="hasRole('ADMIN')" type="submit" th:text="#{button.delete}"></button>
+                </a>
             </td>
         </tr>
         </tbody>
     </table>
     <form sec:authorize="isAuthenticated()" th:action="@{/employees/addEmployee}" th:method="get">
-        <button type="submit">Add Employee</button>
+        <button type="submit" th:text="#{employee.message.add}"></button>
     </form>
 </main>
 <div th:replace="include/footer :: footer"></div>

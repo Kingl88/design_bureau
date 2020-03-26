@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
     <meta charset="utf-8">
-    <title>Position In Company</title>
+    <title th:text="#{position.message.positions}"></title>
 
 </head>
 
@@ -17,7 +17,7 @@
         <thead>
         <tr>
             <td>#</td>
-            <td>Position Name</td>
+            <td th:text="#{position.message.name}"></td>
 
         </tr>
         </thead>
@@ -27,14 +27,14 @@
             <td><span th:text="${position.positionName}"></span></td>
             <td>
                 <form sec:authorize="isAuthenticated()" th:action="@{'/positions/delete/' + ${position.id}}" th:method="post">
-                    <button type="submit">Delete</button>
+                    <button type="submit" th:text="#{button.delete}"></button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
     <form sec:authorize="isAuthenticated()" th:action="@{/positions/addPosition}" th:method="get">
-        <button type="submit">Add Position</button>
+        <button type="submit" th:text="#{button.add.position}"></button>
     </form>
 </main>
 <div th:replace="include/footer :: footer"></div>

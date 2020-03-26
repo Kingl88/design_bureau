@@ -1,25 +1,20 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="include/head :: head">
-    <title>Add new product</title>
+    <title th:text="#{product.message.add}"></title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
 <form class="container" action="/products" method="post">
-    <h3>Add new product</h3>
-    <table>
-        <tr>
-            <td><label>Name Product</label></td>
-            <td>
-                <input type="text" name="productName" th:value="${product.productName}" required/>
-            </td>
-        </tr>
-    </table>
-    <tr>
-        <td>
-            <input type="submit" value="Submit"/>
-        </td>
-    </tr>
+    <br>
+    <h3><span th:text="#{product.message.add}"></span></h3>
+
+    <br><label th:text="#{product.message.add}"></label>
+    <br>
+    <input type="text" name="productName" th:value="${product.productName}" required/>
+    <br>
+    <br>
+    <button type="submit" th:text="#{button.submit}"></button>
 </form>
 <div th:replace="include/footer :: footer"></div>
 </body>

@@ -46,7 +46,8 @@ public class DrawingController {
             return "drawing/addDrawing";
         }
         drawingService.createDrawing(drawing);
-        return "redirect:/drawings";
+        Long id = drawing.getProduct().getId();
+        return "redirect:/products/" + id;
     }
 
     @GetMapping(value = "/delete/{id}")

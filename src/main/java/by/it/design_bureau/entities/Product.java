@@ -1,9 +1,6 @@
 package by.it.design_bureau.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +12,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(exclude = {"drawings"})
+@ToString(exclude = {"drawings"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

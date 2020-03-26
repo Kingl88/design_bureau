@@ -14,4 +14,5 @@ public interface DrawingService {
     Optional<Drawing> getDrawingById(Long id);
     Drawing updateDrawing(Drawing drawing);
     List<Drawing> findAllByProduct(Product product);
+    void deleteDrawingByProduct(Product product);
 }

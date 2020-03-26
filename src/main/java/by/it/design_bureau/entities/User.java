@@ -21,8 +21,8 @@ public class User implements UserDetails{
     private Long id;
     @Size(min=3, message = "Не меньше 3 знаков")
     private String username;
-    @Size(min=5, message = "Не меньше 5 знаков")
     private String password;
+    @Size(min=5, message = "Не меньше 5 знаков")
     private String encodePassword;
     private boolean enabled;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

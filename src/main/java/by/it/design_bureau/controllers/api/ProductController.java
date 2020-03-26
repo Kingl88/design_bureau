@@ -43,6 +43,7 @@ public class ProductController {
 
     @GetMapping(value="/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
+        drawingService.deleteDrawingByProduct(productService.getProductById(id).get());
         productService.deleteProduct(id);
         return "redirect:/products";
     }

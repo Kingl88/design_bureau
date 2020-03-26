@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
-    <title>Drawing</title>
+    <title th:text="#{drawing.message.drawings}"></title>
 </head>
 
 <body>
@@ -14,11 +14,11 @@
         <thead>
         <tr>
             <td>#</td>
-            <td>Product Name</td>
-            <td>Drawing Name</td>
-            <td>Check Name</td>
-            <td>Develop Name</td>
-            <td>Approve Name</td>
+            <td th:text="#{drawing.message.productName}"></td>
+            <td th:text="#{drawing.message.drawingName}"></td>
+            <td th:text="#{drawing.message.checked}"></td>
+            <td th:text="#{drawing.message.developed}"></td>
+            <td th:text="#{drawing.message.approved}"></td>
         </tr>
         </thead>
         <tbody>
@@ -30,16 +30,16 @@
             <td><span th:text="${drawing.getDeveloped().lastName}"></span></td>
             <td><span th:text="${drawing.getApproved().lastName}"></span></td>
             <td>
-                <a th:href="@{/drawings/edit/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit">Update</button></a>
+                <a th:href="@{/drawings/edit/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit" th:text="#{button.update}"></button></a>
             </td>
             <td>
-                <a th:href="@{/drawings/delete/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit">Delete</button></a>
+                <a th:href="@{/drawings/delete/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit" th:text="#{button.delete}"></button></a>
             </td>
         </tr>
         </tbody>
     </table>
     <form sec:authorize="isAuthenticated()" th:action="@{/drawings/addDrawing}" th:method="get">
-        <button type="submit">Add Drawing</button>
+        <button type="submit" th:text="#{button.add.drawing}"></button>
     </form>
 </main>
 <div th:replace="include/footer :: footer"></div>

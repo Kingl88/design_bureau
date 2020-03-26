@@ -9,4 +9,5 @@ import java.util.List;
 public interface DrawingRepository extends CrudRepository<Drawing, Long> {
     List<Drawing> findAll();
     List<Drawing> findAllByProduct(Product product);
+    void deleteAllByProduct(Product product);
 }

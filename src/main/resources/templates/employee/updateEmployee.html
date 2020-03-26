@@ -1,65 +1,66 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="include/head :: head">
-    <title>Update employee</title>
+    <title th:text="#{employee.message.update}"></title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
-<form class="container" action="#" th:action="@{/employees/update/{id}(id=${employee.id})}" th:object="${employee}" method="post">
-    <h3>Update employee</h3>
-    <label>First Name</label>
+<form class="container" action="#" th:action="@{/employees/update/{id}(id=${employee.id})}" th:object="${employee}"
+      method="post">
+    <h3 th:text="#{employee.message.update}"></h3>
+    <label th:text="#{employee.message.firstName}"></label>
     <br>
     <input type="text" name="firstName" th:value="${employee.firstName}"/>
     </br>
-    <label>Middle Name</label>
+    <label th:text="#{employee.message.middleName}"></label>
     <br>
     <input type="text" name="middleName" th:value="${employee.middleName}"/>
     </br>
-    <label>Last Name</label>
+    <label th:text="#{employee.message.lastName}"></label>
     <br>
     <input type="text" name="lastName" th:value="${employee.lastName}"/>
     </br>
-    <label>Phone</label>
+    <label th:text="#{employee.message.phone}"></label>
     <br>
     <input type="text" name="phoneNumber" th:value="${employee.phoneNumber}"/>
     </br>
-    <label>User Name</label>
+    <label th:text="#{employee.message.userName}"></label>
     <br>
     <input type="text" name="username" th:value="${user.username}"
            placeholder="User name" minlength="3" required/>
     </br>
-    <label>User password</label>
+    <label th:text="#{employee.message.password}"></label>
     <br>
-    <input type="text" name="password" th:value="${user.encodePassword}"
+    <input type="text" name="password"
            placeholder="Password" minlength="5" required/>
     </br>
+    <span sec:authorize="hasAnyRole('ADMIN')">
     <br>
-    <label> User role
-        <select name="role">
-            <option th:each="role : ${roles}" th:text="${role}"
-                    th:value="${role}"></option>
-        </select>
-    </label>
+    <label th:text="#{employee.message.role}"></label>
+    <select name="role">
+        <option th:each="role : ${roles}" th:text="${role.toString().substring(5)}"
+                th:value="${role}"></option>
+    </select>
     </br>
     <br>
-    <label>Department
-        <select  name="department" oninvalid="InvalidMsgDep(this)" required="required">
-            <option th:each="department : ${departments}" th:text="${department.departmentName}"
-                    th:value="${department.id}"></option>
-        </select>
-    </label>
+    <label th:text="#{employee.message.department}"></label>
+    <select name="department" oninvalid="InvalidMsgDep(this)" required="required">
+        <option th:each="department : ${departments}" th:text="${department.departmentName}"
+                th:value="${department.id}"></option>
+    </select>
     </br>
     <br>
-    <label> Position in company
-        <select name="position" oninvalid="InvalidMsgPos(this)" required="required">
-            <option th:each="position : ${positions}" th:text="${position.positionName}"
-                    th:value="${position.id}"></option>
-        </select>
-    </label>
+    <label th:text="#{employee.message.positions}"></label>
+    <select name="position" oninvalid="InvalidMsgPos(this)" required="required">
+        <option th:each="position : ${positions}" th:text="${position.positionName}"
+                th:value="${position.id}"></option>
+    </select>
     </br>
+        </span>
     <tr>
-        <td colspan="2">
-            <input type="submit" value="Submit"/>
+        <td>
+            <button type="submit" value="Submit" th:text="#{button.submit}"></button>
         </td>
     </tr>
 </form>
@@ -71,9 +72,8 @@
      */
     function InvalidMsgDep(textbox) {
         if (textbox.value === '') {
-            let mess = '[[#{error.message.dep}]]';
             textbox.setCustomValidity
-            (mess);
+            ('[[#{error.message.dep}]]');
         }
         return true;
     }
@@ -83,10 +83,9 @@
      * @return {boolean}
      */
     function InvalidMsgPos(textbox) {
-        let mess = '[[#{error.message.pos}]]';
         if (textbox.value === '') {
             textbox.setCustomValidity
-            (mess);
+            ('[[#{error.message.pos}]]');
         }
         return true;
     }
