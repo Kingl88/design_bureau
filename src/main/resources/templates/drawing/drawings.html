@@ -1,8 +1,10 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="include/head :: head">
-    <title>Drawing</title>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title th:text="#{drawing.message.drawings}"></title>
 </head>
 
 <body>
@@ -14,32 +16,31 @@
         <thead>
         <tr>
             <td>#</td>
-            <td>Product Name</td>
-            <td>Drawing Name</td>
-            <td>Check Name</td>
-            <td>Develop Name</td>
-            <td>Approve Name</td>
+            <td th:text="#{drawing.message.productName}"></td>
+            <td th:text="#{drawing.message.drawingName}"></td>
+            <td th:text="#{drawing.message.checked}"></td>
+            <td th:text="#{drawing.message.developed}"></td>
+            <td th:text="#{drawing.message.approved}"></td>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="drawing : ${drawings}">
-            <td><span th:text="${drawing.id}"></span></td>
+        <tr th:each="drawing, index : ${drawings}">
+            <td><span th:text="${index.count}"></span></td>
             <td><span th:text="${drawing.getProduct().productName}"></span></td>
             <td><span th:text="${drawing.drawingName}"></span></td>
             <td><span th:text="${drawing.getChecked().lastName}"></span></td>
             <td><span th:text="${drawing.getDeveloped().lastName}"></span></td>
             <td><span th:text="${drawing.getApproved().lastName}"></span></td>
             <td>
-                <form sec:authorize="isAuthenticated()" th:action="@{'/drawings/delete/' + ${drawing.id}}" th:method="post">
-                    <button type="submit">Delete</button>
-                </form>
+                <a th:if="${product} != null" th:href="@{/drawings/edit/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit" th:text="#{button.update}"></button></a>
+            </td>
+            <td>
+                <a th:if="${product} != null" th:href="@{/drawings/delete/{id}(id=${drawing.id})}"><button sec:authorize="isAuthenticated()" type="submit" th:text="#{button.delete}"></button></a>
             </td>
         </tr>
         </tbody>
     </table>
-    <form sec:authorize="isAuthenticated()" th:action="@{/drawings/addDrawing}" th:method="get">
-        <button type="submit">Add Drawing</button>
-    </form>
+        <a th:if="${product} != null" th:href="@{/drawings/addDrawing/{id}(id=${product.id})}"><button sec:authorize="isAuthenticated()" type="submit" th:text="#{button.add.drawing}"></button></a>
 </main>
 <div th:replace="include/footer :: footer"></div>
 

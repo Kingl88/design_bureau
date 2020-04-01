@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface DepartmentService {
     Optional<Department> find(Long id);
     List<Department> getAllDepartments();
-    Department createDepartment(Department department);
+    Department createOrUpdateDepartment(Department department);
+    void deleteDepartment(Long id);
 }

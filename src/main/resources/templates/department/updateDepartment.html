@@ -3,17 +3,17 @@
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title th:text="#{product.message.add}"></title>
+    <title th:text="#{department.message.update}"></title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
-<form class="container" action="/products" method="post">
+<form class="container" th:action="@{/departments/update/{id}(id=${department.id})}" th:object="${department}" method="post">
     <br>
-    <h3><span th:text="#{product.message.add}"></span></h3>
+    <h3><span th:text="#{department.message.add}"></span></h3>
 
-    <br><label th:text="#{product.message.add}"></label>
+    <br><label th:text="#{department.message.name}"></label>
     <br>
-    <input type="text" name="productName" th:value="${product.productName}" required/>
+    <input type="text" name="departmentName" th:value="${department.departmentName}" required/>
     <br>
     <br>
     <button type="submit" th:text="#{button.submit}"></button>

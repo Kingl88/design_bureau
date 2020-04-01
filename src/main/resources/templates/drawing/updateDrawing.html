@@ -3,15 +3,14 @@
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title th:text="#{drawing.message.add}"></title>
+    <title th:text="#{drawing.message.update}"></title>
 </head>
 <body>
-<div th:replace="include/header :: header"></div>
-<form class="container" action="/drawings" method="post">
-    <h3 th:text="#{drawing.message.add}"></h3>
+<form class="container" action="#" th:action="@{/drawings/update/{id}(id=${drawing.id})}" th:object="${drawing}" method="post">
+    <h3 th:text="#{drawing.message.update}"></h3>
     <label th:text="#{drawing.message.productName}"></label>
     <br>
-    <input name="product" th:text="${product.productName}" th:value="${product.id}" hidden="hidden">
+        <input name="product" th:text="${drawing.getProduct().productName}" th:value="${drawing.getProduct().id}" hidden="hidden">
     </br>
     <label th:text="#{drawing.message.drawingName}"></label>
     <br>
@@ -40,7 +39,7 @@
     </br>
     <tr>
         <td>
-                <button type="submit" th:text="#{button.add.drawing}"></button>
+            <button type="submit" th:text="#{button.submit}"></button>
         </td>
     </tr>
 </form>
@@ -52,7 +51,7 @@
     function InvalidMsgEmp(textbox) {
         if (textbox.value === '') {
             textbox.setCustomValidity
-            ('[[#{error.message.emp}]]');
+            ('[[#{error.message.pos}]]');
         }
         return true;
     }

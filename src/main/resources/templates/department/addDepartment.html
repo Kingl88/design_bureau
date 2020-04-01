@@ -1,25 +1,22 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="include/head :: head">
-    <title>Add new department</title>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title th:text="#{department.message.add}"></title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
-<h3>Add new department</h3>
-<form action="/departments" method="post">
-    <table>
-        <tr>
-            <td><label>Name Department</label></td>
-            <td>
-                <input type="text" name="departmentName" th:value="${department.departmentName}"/>
-            </td>
-        </tr>
-    </table>
-    <tr>
-        <td colspan="2">
-            <input type="submit" value="Submit"/>
-        </td>
-    </tr>
+<form class="container" action="/departments" method="post">
+    <br>
+    <h3><span th:text="#{department.message.add}"></span></h3>
+
+            <br><label th:text="#{department.message.name}"></label>
+    <br>
+                <input type="text" name="departmentName" th:value="${department.departmentName}" required/>
+    <br>
+    <br>
+            <button type="submit" th:text="#{button.submit}"></button>
 </form>
 <div th:replace="include/footer :: footer"></div>
 </body>

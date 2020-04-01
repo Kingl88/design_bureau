@@ -1,15 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-    <title>Add new employee</title>
+    <title th:text="#{employee.message.update}"></title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
-<form class="container" action="#" th:action="@{/employees/add}" method="post">
-    <h3 th:text="#{employee.message.add}"></h3>
+<form class="container" action="#" th:action="@{/employees/update/{id}(id=${employee.id})}" th:object="${employee}"
+      method="post">
+    <h3 th:text="#{employee.message.update}"></h3>
     <label th:text="#{employee.message.firstName}"></label>
     <br>
     <input type="text" name="firstName" th:value="${employee.firstName}" required/>
@@ -34,35 +36,40 @@
     </br>
     <label th:text="#{employee.message.password}"></label>
     <br>
-    <input type="text" name="password" th:value="${user.password}"
+    <input type="text" name="password"
            placeholder="Password" minlength="5" required/>
     </br>
+    <span sec:authorize="hasAnyRole('USER')">
+        <input name="role" th:value="${employee.getUser().authorities.stream().findFirst().get()}" hidden="hidden">
+        <input name="department" th:value="${employee.department.id}" hidden="hidden">
+        <input name="position" th:value="${employee.position.id}" hidden="hidden">
+  </span>
+    <span sec:authorize="hasAnyRole('ADMIN')">
     <br>
     <label th:text="#{employee.message.role}"></label>
     <select name="role">
         <option th:each="role : ${roles}" th:text="${role.toString().substring(5)}"
                 th:value="${role}"></option>
     </select>
-
-    </br>
-    <br>
+        </br>
+        <br>
     <label th:text="#{employee.message.department}"></label>
     <select name="department" oninvalid="InvalidMsgDep(this)" required="required">
         <option th:each="department : ${departments}" th:text="${department.departmentName}"
                 th:value="${department.id}"></option>
     </select>
-
-    </br>
-    <br>
+        </br>
+        <br>
     <label th:text="#{employee.message.positions}"></label>
     <select name="position" oninvalid="InvalidMsgPos(this)" required="required">
         <option th:each="position : ${positions}" th:text="${position.positionName}"
                 th:value="${position.id}"></option>
     </select>
-    </br>
+        </br>
+        </span>
     <tr>
         <td>
-            <button type="submit" value="Submit" th:text="#{button.submit}"></button>
+            <button type="submit" value="Submit" th:text="#{button.submit}" onclick="ValidPhone()"></button>
         </td>
     </tr>
 </form>

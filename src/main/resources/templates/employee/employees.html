@@ -1,56 +1,64 @@
-<!DOCTYPE HTML>xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="include/head :: head">
-    <title>Employees</title>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title th:text="#{employee.message.employees}"></title>
 </head>
 
 <body>
 
 <div th:replace="include/header :: header"></div>
-
 <main role="main" class="container">
 
     <table class="table text-center border">
         <thead>
         <tr>
             <td>#</td>
-            <td>First Name</td>
-            <td>Middle Name</td>
-            <td>Last Name</td>
-            <td>Phone</td>
-            <td>User Name</td>
-            <td>User Password</td>
-            <td>User Role</td>
-            <td>Department</td>
-            <td>Position</td>
+            <td th:text="#{employee.message.firstName}"></td>
+            <td th:text="#{employee.message.middleName}"></td>
+            <td th:text="#{employee.message.lastName}"></td>
+            <td th:text="#{employee.message.phone}"></td>
+            <td th:text="#{employee.message.userName}"></td>
+            <td th:text="#{employee.message.role}"></td>
+            <td th:text="#{employee.message.department}"></td>
+            <td th:text="#{employee.message.positions}"></td>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="employee : ${employees}">
-            <td><span th:text="${employee.id}"></span></td>
+        <tr th:each="employee, index : ${employees}">
+            <td><a th:if="${#httpServletRequest.remoteUser.equals(employee.getUser().getUsername()) && #httpServletRequest.isUserInRole('USER') || #httpServletRequest.isUserInRole('ADMIN')}"
+                   th:href="@{/employees/{id}(id=${employee.id})}"><span th:text="${index.count}"></span></a></td>
             <td><span th:text="${employee.getFirstName()}"></span></td>
             <td><span th:text="${employee.getMiddleName()}"></span></td>
             <td><span th:text="${employee.getLastName()}"></span></td>
             <td><span th:text="${employee.getPhoneNumber()}"></span></td>
             <td><span th:text="${employee.getUser().username}"></span></td>
-            <td><span th:text="${employee.getUser().encodePassword}"></span></td>
-            <td><span th:text="${employee.getUser().authorities}"></span></td>
+            <td><span
+                    th:text="${employee.getUser().authorities.stream().findFirst().toString().substring(14, employee.getUser().authorities.stream().findFirst().toString().length()-1)}"></span>
+            </td>
             <td><span th:text="${employee.getDepartment().getDepartmentName()}"></span></td>
             <td><span th:text="${employee.getPosition().positionName}"></span></td>
             <td>
-            <form sec:authorize="isAuthenticated()" th:action="@{'/employees/delete/' + ${employee.id}}" th:method="post">
-                <button type="submit">Delete</button>
-            </form>
+                <a th:href="@{/employees/edit/{id}(id=${employee.id})}">
+                    <button th:if="${#httpServletRequest.remoteUser.equals(employee.getUser().getUsername()) && #httpServletRequest.isUserInRole('USER') || #httpServletRequest.isUserInRole('ADMIN')}"
+                            sec:authorize="isAuthenticated()" type="submit" th:text="#{button.update}"></button>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/employees/delete/{id}(id=${employee.id})}" th:onClick="return confirm('[[#{error.message.sure}]]')">
+                    <button sec:authorize="hasRole('ADMIN')" type="submit" th:text="#{button.delete}"></button>
+                </a>
             </td>
         </tr>
         </tbody>
     </table>
-    <form sec:authorize="isAuthenticated()" th:action="@{/employees/addEmployee}" th:method="get">
-        <button type="submit">Add Employee</button>
+    <form sec:authorize="hasRole('ADMIN')" th:action="@{/employees/addEmployee}" th:method="get">
+        <button type="submit" th:text="#{employee.message.add}"></button>
     </form>
 </main>
 <div th:replace="include/footer :: footer"></div>
-
 <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>
 </html>

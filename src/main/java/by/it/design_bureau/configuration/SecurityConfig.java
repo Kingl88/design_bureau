@@ -26,10 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .mvcMatchers("/", "/products", "/drawings").permitAll()
-                .mvcMatchers("/employees/**", "/departments/**", "/positions/**").hasAnyRole("ADMIN")
-                .mvcMatchers("/drawings/**").hasAnyRole("USER", "ADMIN")
-                .mvcMatchers("/products/addProduct").hasRole("USER")
+                .mvcMatchers("/", "/products/**", "/drawings").permitAll()
+                .mvcMatchers( "/departments/**", "/positions/**", "/products/addProduct").hasAnyRole("ADMIN")
+                .mvcMatchers("/drawings/**", "/employees/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
@@ -41,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder()).and().inMemoryAuthentication().withUser("admin")
-        .password(passwordEncoder().encode("admin")).roles("ADMIN");
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 }

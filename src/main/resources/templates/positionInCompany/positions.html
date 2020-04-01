@@ -1,8 +1,12 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="include/head :: head">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="utf-8">
-    <title>Position In Company</title>
+    <title th:if="${department != null}" th:text="#{main.message.list.dep} + ${department.departmentName}"></title>
+    <title th:if="${department == null}" th:text="#{position.message.positions}"></title>
 
 </head>
 
@@ -11,23 +15,37 @@
 <div th:replace="include/header :: header"></div>
 
 <main role="main" class="container">
-
+    <br>
+<h6 th:if="${department != null}" th:text="#{main.message.list.dep} + ${department.departmentName}"></h6>
+    <br>
     <table class="table text-center border">
         <thead>
         <tr>
             <td>#</td>
-            <td>Position Name</td>
+            <td th:text="#{position.message.name}"></td>
 
         </tr>
         </thead>
         <tbody>
-        <tr th:each="position : ${positions}">
-            <td><span th:text="${position.id}"></span></td>
+        <tr th:each="position, index : ${positions}">
+            <td><span th:text="${index.count}"></span></td>
             <td><span th:text="${position.positionName}"></span></td>
+            <td>
+                <a th:href="@{/positions/edit/{id}(id=${position.id})}">
+                    <button sec:authorize="hasRole('ADMIN')" type="submit" th:text="#{button.update}"></button>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/positions/delete/{id}(id=${position.id})}" th:onClick="return confirm('[[#{error.message.sure}]]')">
+                    <button sec:authorize="hasRole('ADMIN')" type="submit" th:text="#{button.delete}"></button>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>
-
+    <form sec:authorize="isAuthenticated()" th:action="@{/positions/addPosition}" th:method="get">
+        <button type="submit" th:text="#{button.add.position}"></button>
+    </form>
 </main>
 <div th:replace="include/footer :: footer"></div>
 </body>
