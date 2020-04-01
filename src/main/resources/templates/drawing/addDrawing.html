@@ -15,25 +15,25 @@
     </br>
     <label th:text="#{drawing.message.drawingName}"></label>
     <br>
-    <input type="text" name="drawingName" th:value="${drawing.drawingName}"/>
+    <input type="text" name="drawingName" th:value="${drawing.drawingName}" required/>
     </br>
     <label th:text="#{drawing.message.checked}"></label>
     <br>
-    <select name="checked">
+    <select name="checked" oninvalid="InvalidMsgEmp(this)" required="required">
         <option th:each="employee : ${employees}" th:text="${employee.firstName}  + ' ' +  ${employee.lastName}"
                 th:value="${employee.id}" th:required="required"></option>
     </select>
     </br>
     <label th:text="#{drawing.message.developed}"></label>
     <br>
-    <select name="developed">
+    <select name="developed" oninvalid="InvalidMsgEmp(this)" required="required">
         <option th:each="employee : ${employees}" th:text="${employee.firstName}  + ' ' +   ${employee.lastName}"
                 th:value="${employee.id}"></option>
     </select>
     </br>
     <label th:text="#{drawing.message.approved}"></label>
     <br>
-    <select name="approved">
+    <select name="approved" oninvalid="InvalidMsgEmp(this)" required="required">
         <option th:each="employee : ${employees}" th:text="${employee.firstName}   + ' ' +  ${employee.lastName}"
                 th:value="${employee.id}"></option>
     </select>
@@ -45,5 +45,17 @@
     </tr>
 </form>
 <div th:replace="include/footer :: footer"></div>
+<script>
+    /**
+     * @return {boolean}
+     */
+    function InvalidMsgEmp(textbox) {
+        if (textbox.value === '') {
+            textbox.setCustomValidity
+            ('[[#{error.message.emp}]]');
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

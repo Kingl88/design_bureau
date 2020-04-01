@@ -48,12 +48,15 @@ public class EmployeeController {
     public String addEmployeeSubmit(@Valid Employee employee,
                                     @Valid User user,
                                     @ModelAttribute("role") Role role,
+                                    @ModelAttribute("department") Department department,
+                                    @ModelAttribute("position") PositionInCompany position,
                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "employee/addEmployee";
         }
         if (userService.createUser(user, role)) {
-            employee.getDepartment().setPositions(employee.getPosition());
+            department.getPositions().add(position);
+            position.getDepartments().add(department);
             employee.setUser(user);
             employeeService.createEmployee(employee);
             return "redirect:/employees";

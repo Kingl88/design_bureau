@@ -28,7 +28,8 @@
         </thead>
         <tbody>
         <tr th:each="employee, index : ${employees}">
-            <td><a th:href="@{/employees/{id}(id=${employee.id})}"><span th:text="${index.count}"></span></a></td>
+            <td><a th:if="${#httpServletRequest.remoteUser.equals(employee.getUser().getUsername()) && #httpServletRequest.isUserInRole('USER') || #httpServletRequest.isUserInRole('ADMIN')}"
+                   th:href="@{/employees/{id}(id=${employee.id})}"><span th:text="${index.count}"></span></a></td>
             <td><span th:text="${employee.getFirstName()}"></span></td>
             <td><span th:text="${employee.getMiddleName()}"></span></td>
             <td><span th:text="${employee.getLastName()}"></span></td>

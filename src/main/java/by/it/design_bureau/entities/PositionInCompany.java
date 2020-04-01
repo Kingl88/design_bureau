@@ -16,10 +16,11 @@ import java.util.Set;
 public class PositionInCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "POSITION_ID")
     private Long id;
     @NotEmpty
     private String positionName;
-    @ManyToMany(mappedBy = "positions")
+    @ManyToMany(mappedBy = "positions", cascade = CascadeType.ALL)
     private Set<Department> departments;
     @OneToMany(mappedBy = "position", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)

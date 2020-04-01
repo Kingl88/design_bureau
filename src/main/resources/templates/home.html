@@ -4,18 +4,20 @@
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>Design_bureau</title>
+    <title th:text="#{main.message.title}"></title>
 </head>
 <body>
 <div th:replace="include/header :: header"></div>
 <div class="container">
-    <div class="starter-template">
-        <a th:href="@{employees}">Employees</a><br/>
-        <a th:href="@{departments}">Departments</a><br/>
-        <a th:href="@{positions}">Positions in company</a><br/>
-        <a th:href="@{products}">Products</a><br/>
-        <a th:href="@{drawings}">Drawings</a><br/>
-    </div>
+    <br>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Данное приложение служит для ведения отчетности о работе конструкторского подразделения.
+    С помощью него можно следить за тем кто из сотрудников какой объем работ сделал.
+    Можно осуществлять быстрый доступ к списку документации на конкретное изделие выпускаемое на предприятии.
+    Так же сотрудники работающие на производстве, могут без аторизации получить доступ к списку чертежей на изделия,
+    тем самым могут следить за комплектом чертежей который у них находится на производстве, и тем который должен быть.
+    Так же можно настраивать права доступа для начальников подразделений и их сотрудников, в зависимости от выполняемой ими работы.
+    </p>
+    <br>
 </div>
 <div th:replace="include/footer :: footer"></div>
 </body>

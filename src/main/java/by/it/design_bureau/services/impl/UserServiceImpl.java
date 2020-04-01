@@ -60,22 +60,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username){
         User user = userRepository.findByUsername(username);
-        try {
             if(user==null){
+                System.out.println(passwordEncoder.encode("admin"));
                 throw new UsernameNotFoundException("User not found");
             }
-        }
-        catch (UsernameNotFoundException e)
-        {
-            log.error(e.getMessage());
-            if(username.equals("admin")){
-                return User.builder()
-                        .username(username)
-                        .password(passwordEncoder.encode("admin"))
-                        .authorities(Collections.singleton(Role.ROLE_ADMIN))
-                        .enabled(true).build();
-            }
-        }
         return User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())

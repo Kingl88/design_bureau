@@ -75,6 +75,7 @@ public class DepartmentController {
         Department department = departmentService.find(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid department Id:" + id));
         model.addAttribute("positions", position.findPositionsInDepartment(department));
+        model.addAttribute("department", department);
         return "positionInCompany/positions";
     }
 }

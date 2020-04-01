@@ -18,6 +18,7 @@ import java.util.Set;
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "DEPARTMENT_ID", unique = true)
     private Long id;
     @NotEmpty
     private String departmentName;
@@ -26,8 +27,8 @@ public class Department {
     private Set<Employee> employees = new HashSet<>();
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "DEPARTMENT_POSITION",
-            joinColumns = {@JoinColumn},
-            inverseJoinColumns = {@JoinColumn})
+            joinColumns = {@JoinColumn(name = "DEPARTMENT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "POSITION_ID")})
     private List<PositionInCompany> positions = new ArrayList<>();
 
 }
