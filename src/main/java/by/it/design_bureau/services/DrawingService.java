@@ -15,4 +15,5 @@ public interface DrawingService {
     Drawing updateDrawing(Drawing drawing);
     List<Drawing> findAllByProduct(Product product);
     void deleteDrawingByProduct(Product product);
+    List<Drawing> findAllByEmployee(Employee employee);
 }

@@ -53,6 +53,7 @@ public class ProductController {
         Product product = productService.getProductById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
         model.addAttribute("drawings", drawingService.findAllByProduct(product));
+        model.addAttribute("product", product);
         return "drawing/drawings";
     }
 }

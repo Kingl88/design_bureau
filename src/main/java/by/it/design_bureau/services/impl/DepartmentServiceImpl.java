@@ -27,8 +27,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department createDepartment(Department department) {
-        return departmentRepository.save(department);
+    public Department createOrUpdateDepartment(Department entity) {
+        if(entity.getId()!=null && departmentRepository.findById(entity.getId()).isPresent()){
+            Department newDepartment = departmentRepository.findById(entity.getId()).get();
+            newDepartment.setDepartmentName(entity.getDepartmentName());
+            return departmentRepository.save(newDepartment);
+        } else {
+            return departmentRepository.save(entity);
+        }
     }
 
     @Override

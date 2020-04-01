@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -34,13 +35,35 @@ public class PositionInCompanyController {
         if (bindingResult.hasErrors()) {
             return "positionInCompany/addPosition";
         }
-        this.position.createPosition(position);
+        this.position.createOrUpdatePosition(position);
         return "redirect:/positions";
     }
 
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.POST)
+    @GetMapping(value="/delete/{id}")
     public String deletePosition(@PathVariable Long id) {
         position.deletePosition(id);
+        return "redirect:/positions";
+    }
+    @GetMapping(value = "/edit/{id}")
+    public String showUpdateForm(@PathVariable Long id, Model model) {
+        PositionInCompany position;
+        try {
+            position = this.position.findPosition(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid position Id:" + id));
+        } catch (IllegalArgumentException e) {
+            return "redirect:/positions";
+        }
+        model.addAttribute("position", position);
+        return "positionInCompany/updatePosition";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String updatePosition(@PathVariable("id") long id, @Valid PositionInCompany position, BindingResult result) {
+        if (result.hasErrors()) {
+            position.setId(id);
+            return "positionInCompany/updatePosition";
+        }
+        this.position.createOrUpdatePosition(position);
         return "redirect:/positions";
     }
 }

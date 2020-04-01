@@ -1,18 +1,16 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="include/head :: head">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Update drawing</title>
 </head>
 <body>
-<div th:replace="include/header :: header"></div>
 <form class="container" action="#" th:action="@{/drawings/update/{id}(id=${drawing.id})}" th:object="${drawing}" method="post">
     <h3>Update drawing</h3>
     <label>Name Product</label>
     <br>
-    <select name="product">
-        <option th:each="product : ${products}" th:text="${product.productName}"
-                th:value="${product.id}"></option>
-    </select>
+        <input name="product" th:text="${drawing.getProduct().productName}" th:value="${drawing.getProduct().id}" hidden="hidden">
     </br>
     <label>Name Drawing</label>
     <br>
@@ -40,8 +38,8 @@
     </select>
     </br>
     <tr>
-        <td colspan="2">
-            <input type="submit" value="Submit"/>
+        <td>
+            <button type="submit" th:text="#{button.submit}"></button>
         </td>
     </tr>
 </form>

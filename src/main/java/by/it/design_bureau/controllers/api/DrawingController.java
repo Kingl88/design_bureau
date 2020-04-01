@@ -32,11 +32,11 @@ public class DrawingController {
         model.addAttribute("drawings", allDrawing);
         return "drawing/drawings";
     }
-    @RequestMapping(value = "/addDrawing", method = RequestMethod.GET)
-    public String addDrawingPage(Model model) {
+    @RequestMapping(value = "/addDrawing/{id}", method = RequestMethod.GET)
+    public String addDrawingPage(Model model, @PathVariable Long id) {
         model.addAttribute("drawing", new Drawing());
         model.addAttribute("employees", employeeService.getAllEmployees());
-        model.addAttribute("products", productService.getAllProduct());
+        model.addAttribute("product", productService.getProductById(id).get());
         return "drawing/addDrawing";
     }
 
@@ -61,7 +61,6 @@ public class DrawingController {
         Drawing drawing = drawingService.getDrawingById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         model.addAttribute("employees", employeeService.getAllEmployees());
-        model.addAttribute("products", productService.getAllProduct());
         model.addAttribute("drawing", drawing);
         return "drawing/updateDrawing";
     }
@@ -74,6 +73,7 @@ public class DrawingController {
             return "drawing/updateDrawing";
         }
         drawingService.updateDrawing(drawing);
-        return "redirect:/drawings";
+        Long id1 = drawing.getProduct().getId();
+        return "redirect:/products/" + id1;
     }
 }

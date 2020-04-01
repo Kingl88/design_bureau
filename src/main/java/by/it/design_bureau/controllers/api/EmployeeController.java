@@ -1,10 +1,7 @@
 package by.it.design_bureau.controllers.api;
 
 import by.it.design_bureau.entities.*;
-import by.it.design_bureau.services.DepartmentService;
-import by.it.design_bureau.services.EmployeeService;
-import by.it.design_bureau.services.PositionInCompanyService;
-import by.it.design_bureau.services.UserService;
+import by.it.design_bureau.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +24,8 @@ public class EmployeeController {
     private DepartmentService departmentService;
     @Autowired
     private PositionInCompanyService position;
+    @Autowired
+    private DrawingService drawingService;
 
     @GetMapping
     public String employeeList(Model model) {
@@ -49,14 +48,18 @@ public class EmployeeController {
     public String addEmployeeSubmit(@Valid Employee employee,
                                     @Valid User user,
                                     @ModelAttribute("role") Role role,
-                                    BindingResult bindingResult, Model model) {
+                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "employee/addEmployee";
         }
-        userService.createUser(user, role);
-        employee.setUser(user);
-        employeeService.createEmployee(employee);
-        return "redirect:/employees";
+        if (userService.createUser(user, role)) {
+            employee.getDepartment().setPositions(employee.getPosition());
+            employee.setUser(user);
+            employeeService.createEmployee(employee);
+            return "redirect:/employees";
+        } else {
+            return "employee/addEmployee";
+        }
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -67,8 +70,13 @@ public class EmployeeController {
 
     @GetMapping(value = "/edit/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
-        Employee employee = employeeService.getEmployeeById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        Employee employee;
+        try {
+            employee = employeeService.getEmployeeById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        } catch (IllegalArgumentException e) {
+            return "redirect:/employees";
+        }
         model.addAttribute("employee", employee);
         model.addAttribute("user", employee.getUser());
         model.addAttribute("roles", Role.values());
@@ -80,15 +88,22 @@ public class EmployeeController {
     @PostMapping(value = "/update/{id}")
     public String updateEmployee(@PathVariable("id") long id, @Valid Employee employee, @Valid User user,
                                  @ModelAttribute("role") Role role,
-                                 BindingResult result, Model model) {
+                                 BindingResult result) {
         if (result.hasErrors()) {
             employee.setId(id);
             return "employee/updateEmployee";
         }
-        userService.deleteUser(id);
-        userService.createUser(user, role);
-        employee.setUser(user);
-        employeeService.createEmployee(employee);
+        userService.update(user, role);
+        employeeService.updateEmployee(employee);
         return "redirect:/employees";
+    }
+
+    @GetMapping(value = "/{id}")
+    public String getAllDrawing(@PathVariable Long id, Model model) {
+        Employee employee = employeeService.getEmployeeById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
+        model.addAttribute("drawings", drawingService.findAllByEmployee(employee));
+        model.addAttribute("product", null);
+        return "drawing/drawings";
     }
 }

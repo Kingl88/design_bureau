@@ -12,8 +12,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Builder
-@EqualsAndHashCode(exclude = {"employee"})
-@ToString(exclude = {"employee"})
+@EqualsAndHashCode(exclude = {"employee", "authorities"})
+@ToString(exclude = {"employee", "authorities"})
 @Table(name = "user")
 public class User implements UserDetails{
     @Id
@@ -22,8 +22,6 @@ public class User implements UserDetails{
     @Size(min=3, message = "Не меньше 3 знаков")
     private String username;
     private String password;
-    @Size(min=5, message = "Не меньше 5 знаков")
-    private String encodePassword;
     private boolean enabled;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -33,7 +31,19 @@ public class User implements UserDetails{
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 }

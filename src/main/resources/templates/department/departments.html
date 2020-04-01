@@ -1,7 +1,9 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="include/head :: head">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title th:text="#{department.message.departments}"></title>
 </head>
 
@@ -22,11 +24,16 @@
         <tbody>
         <tr th:each="department, index : ${departments}">
             <td><span th:text="${index.count}"></span></td>
-            <td><span th:text="${department.departmentName}"></span></td>
+            <td><a th:href="@{/departments/{id}(id=${department.id})}"><span th:text="${department.departmentName}"></span></a></td>
             <td>
-                <form sec:authorize="isAuthenticated()" th:action="@{'/departments/delete/' + ${department.id}}" th:method="post">
-                    <button type="submit" th:text="#{button.delete}"></button>
-                </form>
+                <a th:href="@{/departments/edit/{id}(id=${department.id})}">
+                    <button sec:authorize="hasRole('ADMIN')" type="submit" th:text="#{button.update}"></button>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/departments/delete/{id}(id=${department.id})}" th:onClick="return confirm('[[#{error.message.sure}]]')">
+                    <button sec:authorize="hasRole('ADMIN')" type="submit" th:text="#{button.delete}"></button>
+                </a>
             </td>
         </tr>
         </tbody>

@@ -1,6 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="include/head :: head">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
     <title>Add new employee</title>
 </head>
 <body>
@@ -9,19 +12,20 @@
     <h3 th:text="#{employee.message.add}"></h3>
     <label th:text="#{employee.message.firstName}"></label>
     <br>
-    <input type="text" name="firstName" th:value="${employee.firstName}"/>
+    <input type="text" name="firstName" th:value="${employee.firstName}" required/>
     </br>
     <label th:text="#{employee.message.middleName}"></label>
     <br>
-    <input type="text" name="middleName" th:value="${employee.middleName}"/>
+    <input type="text" name="middleName" th:value="${employee.middleName}" required/>
     </br>
     <label th:text="#{employee.message.lastName}"></label>
     <br>
-    <input type="text" name="lastName" th:value="${employee.lastName}"/>
+    <input type="text" name="lastName" th:value="${employee.lastName}" required/>
     </br>
     <label th:text="#{employee.message.phone}"></label>
     <br>
-    <input type="text" name="phoneNumber" th:value="${employee.phoneNumber}"/>
+    <input type="tel" id="phone" name="phoneNumber" th:value="${employee.phoneNumber}"
+           pattern="[\+]\d{3}\s[\(]\d{2}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" minlength="19" maxlength="19"/>
     </br>
     <label th:text="#{employee.message.userName}"></label>
     <br>
@@ -30,7 +34,7 @@
     </br>
     <label th:text="#{employee.message.password}"></label>
     <br>
-    <input type="text" name="password" th:value="${user.encodePassword}"
+    <input type="text" name="password" th:value="${user.password}"
            placeholder="Password" minlength="5" required/>
     </br>
     <br>
@@ -87,6 +91,11 @@
         }
         return true;
     }
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#phone").mask("+375 (99) 999-99-99");
+    });
 </script>
 </body>
 </html>

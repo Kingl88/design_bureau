@@ -5,9 +5,11 @@
 
 <div class="container" th:fragment="header">
     <form class="text-right" sec:authorize="!isAuthenticated()" th:action="@{/login}" method="post">
-        <button sec:authorize="!isAuthenticated()" th:action="@{/login}" type="submit" th:text="#{button.signin}"></button>
+        <br>
+        <button class="text-right" sec:authorize="!isAuthenticated()" th:action="@{/login}" type="submit" th:text="#{button.signin}"></button>
     </form>
     <form class="text-right" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <br>
         Hello, <b sec:authentication="name"></b>
         <button type="submit" th:text="#{button.signout}"></button>
     </form>
